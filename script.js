@@ -1,11 +1,11 @@
 // Configuration constants
 const CONFIG = {
   // Colors
-  FACE_OUTLINE_COLOR: "lightgreen",
-  EYE_LANDMARK_COLOR: "cyan",
+  FACE_OUTLINE_COLOR: "rgba(0, 0, 0, 0)",
+  EYE_LANDMARK_COLOR: "rgba(0, 0, 0, 0)",
   IRIS_LANDMARK_COLOR: "yellow",
-  EYE_CENTER_COLOR: "red",
-  IRIS_POINT_COLOR: "yellow",
+  EYE_CENTER_COLOR: "rgba(0, 0, 0, 0)",
+  IRIS_POINT_COLOR: "rgba(0, 0, 0, 0)",
   EYE_BOX_COLOR: "green",
 
   // Sizes

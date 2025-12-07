@@ -76,12 +76,15 @@ git-init:
 	@if [ ! -d ".git" ]; then \
 		echo "Initializing git repository..."; \
 		git init; \
+		git checkout -b main; \
 		git add .; \
 		git commit -m "Initial commit: Eye tracking application with TensorFlow.js and MediaPipe FaceMesh"; \
 		echo "Git repository initialized."; \
 	else \
 		echo "Git repository already exists."; \
 	fi
+
+
 
 # Install and start in one command
 .PHONY: run
