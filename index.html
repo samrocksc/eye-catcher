@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Eye Tracking with TensorFlow.js</title>
+        <link rel="stylesheet" href="style.css" />
+        <link
+            rel="icon"
+            href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>👁️</text></svg>"
+        />
+        <!-- Load TensorFlow.js -->
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.11.0/dist/tf.min.js"></script>
+        <!-- Load MediaPipe Drawing Utils (required dependency) -->
+        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.3/drawing_utils.min.js"></script>
+        <!-- Load MediaPipe FaceMesh - must load before face-landmarks-detection -->
+        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
+        <!-- Load TensorFlow.js MediaPipe Facemesh - loads last -->
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-landmarks-detection@1.0.2/dist/face-landmarks-detection.min.js"></script>
+        <!-- Add logging to debug library loading -->
+        <script>
+            window.libraryLoadLog = [];
+
+            window.addEventListener("load", function () {
+                console.log("Window load event fired");
+                window.libraryLoadLog.push({
+                    time: new Date().toISOString(),
+                    event: "window.load",
+                });
+            });
+
+            // Check for libraries periodically
+            setInterval(function () {
+                const status = {
+                    time: new Date().toISOString(),
+                    tf: typeof tf !== "undefined" ? "loaded" : "not loaded",
+                    faceMesh:
+                        typeof FaceMesh !== "undefined"
+                            ? "loaded"
+                            : "not loaded",
+                    faceLandmarksDetection:
+                        typeof faceLandmarksDetection !== "undefined"
+                            ? "loaded"
+                            : "not loaded",
+                };
+                console.log("Library status:", status);
+            }, 1000);
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Eye Tracking with TensorFlow.js</h1>
+            <div id="status">Loading TensorFlow.js and FaceMesh models...</div>
+
+            <div id="main-content">
+                <div id="camera-section">
+                    <h2>Camera Feed</h2>
+                    <div id="camera-container">
+                        <div id="camera-feed">
+                            <video
+                                autoplay
+                                playsinline
+                                id="webcam"
+                                width="640"
+                                height="480"
+                            ></video>
+                            <canvas
+                                id="overlay"
+                                width="640"
+                                height="480"
+                            ></canvas>
+                        </div>
+                    </div>
+
+                    <div id="controls">
+                        <button id="start-btn" disabled>Start Camera</button>
+                        <button id="stop-btn" disabled>Stop Camera</button>
+                    </div>
+                </div>
+
+                <div id="data-display">
+                    <h3>Eye Tracking Data</h3>
+                    <p>
+                        Left Eye Position:
+                        <span id="left-eye">Not detected</span>
+                    </p>
+                    <p>
+                        Right Eye Position:
+                        <span id="right-eye">Not detected</span>
+                    </p>
+                    <p>
+                        Gaze Direction:
+                        <span id="gaze-direction">Not detected</span>
+                    </p>
+                    <p>
+                        Tracking Status:
+                        <span id="tracking-status">Not active</span>
+                    </p>
+                </div>
+
+                <div id="instructions">
+                    <h3>How to Use</h3>
+                    <ol>
+                        <li>Allow camera access when prompted</li>
+                        <li>Position your face in the camera view</li>
+                        <li>
+                            The system will detect your face and track your eyes
+                        </li>
+                        <li>Eye positions will be displayed in real-time</li>
+                    </ol>
+                    <h3>Troubleshooting</h3>
+                    <ul>
+                        <li>Ensure you're using Chrome, Firefox, or Edge</li>
+                        <li>
+                            Check that your camera is not being used by another
+                            application
+                        </li>
+                        <li>
+                            Make sure you're on HTTPS (required for camera
+                            access in production)
+                        </li>
+                        <li>
+                            Enable camera permissions in your browser settings
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+</html>
